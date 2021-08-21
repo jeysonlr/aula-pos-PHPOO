@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+  apache2:
+    image: cafeechopp/apache-php:v1.0
+    container_name: apache
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes: 
+      - ${DOCUMENT_ROOT-./html}:/var/www/html
+      - ${PHP_INI-./.config/php/php.ini}:/usr/local/etc/php/php.ini
+      - ${VHOSTS_DIR-./.config/vhosts}:/etc/apache2/sites-enabled
+      - ${LOG_DIR-./logs/apache2}:/var/log/apache2
+    depends_on:
+      - mysql
+
+    networks: 
+      - backend
+  
+  mysql:
+    image: mysql:8.0.17
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes: 
+      - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
+      - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: cafe
+      MYSQL_DATABASE: api_base
+      MYSQL_USER: cafe
+      MYSQL_PASSWORD: cafe
+    # env_file: 
+    #   - .env
+    networks: 
+      - backend
+
+  # CONTAINER DO SISTEMA GERENCIADOR DE BANCO DE DADOS (SGBD)
+  adminer:
+    image: adminer
+    container_name: sgbd
+    ports:
+      - "8080:8080"
+
+networks:
+  backend:
+
+
