@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require './Connection.php';
 
-class Pessoa
+abstract class Pessoa
 {
     /**
      * @var int
@@ -26,24 +26,45 @@ class Pessoa
      */
     public $email;
 
+    /**
+     * @var string
+     */
+    public $dataNascimento;
+
     public function __construct(
-        int $id
+        string $email
     ) {
-        $this->id = $id;
+        $this->email = $email;
     }
 
+    /**
+     * @return object
+     * @throws Throwable
+     */
     public function verDados(): object
     {
         $conn = new Connection();
         $conectar = $conn->connect();
 
-        $sql = "SELECT nome, telefone, email
+        $sql = "SELECT 
+                    nome, 
+                    telefone, 
+                    email
                 FROM api_base.pessoa
-                WHERE id = :id";
+                WHERE email = :email";
 
         $result = $conectar->prepare($sql);
         $result->execute(array(':id' => $this->id));
         
         return $result->fetchObject();
     }
+
+    public function calculaIdade(string $dataNascimento): int
+    {
+        $date = new DateTime($dataNascimento);
+        $intervalo = $date->diff(New DateTime(date('Y-m-d')));
+        return intval($intervalo->format('%Y'));
+    }
+
+    abstract public function calculaAvaliacao();
 }
