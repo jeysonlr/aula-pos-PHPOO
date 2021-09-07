@@ -79,11 +79,12 @@ class Estudante extends Pessoa
                 VALUES(:nome, :telefone, :email, :data_nascimento)";
 
         $result = $conexao->prepare($sql);
-        $result->execute(array(
-            ':nome'=> $estudante['nome'],
-            ':telefone'=> $estudante['telefone'],
-            ':email'=> $estudante['email'],
-            ':data_nascimento'=> $estudante['data_nascimento']
+        $result->execute(
+            array(
+                ':nome' => $estudante['nome'],
+                ':telefone' => $estudante['telefone'],
+                ':email' => $estudante['email'],
+                ':data_nascimento' => $estudante['data_nascimento']
             )
         );
 
@@ -123,11 +124,11 @@ class Estudante extends Pessoa
 
         $result = $conexao->prepare($sql);
         $resultStatus = $result->execute(array(
-           ':nome' => $estudante['nome'],
-           ':telefone' => $estudante['telefone'],
-           ':email' => $estudante['email'],
-           ':data_nascimento' => $estudante['data_nascimento'],
-           ':id' => $estudante['id']
+            ':nome' => $estudante['nome'],
+            ':telefone' => $estudante['telefone'],
+            ':email' => $estudante['email'],
+            ':data_nascimento' => $estudante['data_nascimento'],
+            ':id' => $estudante['id']
         ));
 
         if ($resultStatus) {

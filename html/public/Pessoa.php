@@ -55,14 +55,14 @@ abstract class Pessoa
 
         $result = $conectar->prepare($sql);
         $result->execute(array(':id' => $this->id));
-        
+
         return $result->fetchObject();
     }
 
     public function calculaIdade(string $dataNascimento): int
     {
         $date = new DateTime($dataNascimento);
-        $intervalo = $date->diff(New DateTime(date('Y-m-d')));
+        $intervalo = $date->diff(new DateTime(date('Y-m-d')));
         return intval($intervalo->format('%Y'));
     }
 

@@ -44,25 +44,4 @@ class Connection
         $result->execute();
         return $result->fetchAll();
     }
-
-//    /**
-//     * @return array
-//     * @throws Throwable
-//     */
-//    public function listaProfessores(): array
-//    {
-//        $sql = "SELECT
-//                   nome,
-//                   email,
-//                   especialidade,
-//                   salario,
-//                   data_nascimento
-//                FROM estudante p
-//                LEFT JOIN pessoa po on p.pessoa_id = po.ID";
-//
-//        $conectar = $this->connect();
-//        $result = $conectar->prepare($sql);
-//        $result->execute();
-//        return $result->fetchAll();
-//    }
 }
